@@ -4,7 +4,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.42.13
-Release  : 26
+Release  : 27
 URL      : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.42.13.tar.gz
 Source0  : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.42.13.tar.gz
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
