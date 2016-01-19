@@ -4,7 +4,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.42.13
-Release  : 30
+Release  : 31
 URL      : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.42.13.tar.gz
 Source0  : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.42.13.tar.gz
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
@@ -33,6 +33,7 @@ BuildRequires : setuptools
 BuildRequires : texinfo
 BuildRequires : util-linux-dev
 Patch1: stateless.patch
+Patch2: 0001-Skip-certain-tests-due-to-failure-on-XFS-build-hosts.patch
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
@@ -75,6 +76,7 @@ Group: Development
 Requires: e2fsprogs-lib
 Requires: e2fsprogs-bin
 Requires: e2fsprogs-data
+Provides: e2fsprogs-devel
 
 %description dev
 dev components for the e2fsprogs package.
@@ -116,14 +118,18 @@ locales components for the e2fsprogs package.
 %prep
 %setup -q -n e2fsprogs-1.42.13
 %patch1 -p1
+%patch2 -p1
 
 %build
-export CFLAGS="$CFLAGS -Os -ffunction-sections"
-export CXXFLAGS="$CXXFLAGS -Os -ffunction-sections"
+export CFLAGS="$CFLAGS -Os -ffunction-sections "
+export CXXFLAGS="$CXXFLAGS -Os -ffunction-sections "
 %reconfigure --disable-static --disable-fsck --disable-libblkid  --disable-uuidd --disable-libuuid --enable-elf-shlibs
 make V=1  %{?_smp_mflags}
 
 %check
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
