@@ -4,7 +4,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.42.13
-Release  : 31
+Release  : 32
 URL      : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.42.13.tar.gz
 Source0  : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.42.13.tar.gz
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
@@ -176,8 +176,8 @@ rm -rf %{buildroot}
 
 %files data
 %defattr(-,root,root,-)
+%exclude /usr/share/et/et_c.awk
 /usr/share/defaults/e2fsprogs/mke2fs.conf
-/usr/share/et/et_c.awk
 /usr/share/et/et_h.awk
 /usr/share/ss/ct_c.awk
 /usr/share/ss/ct_c.sed
