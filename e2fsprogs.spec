@@ -4,7 +4,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.42.13
-Release  : 33
+Release  : 34
 URL      : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.42.13.tar.gz
 Source0  : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.42.13.tar.gz
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
@@ -122,6 +122,8 @@ locales components for the e2fsprogs package.
 
 %build
 export CFLAGS="$CFLAGS -Os -ffunction-sections "
+export FCFLAGS="$CFLAGS -Os -ffunction-sections "
+export FFLAGS="$CFLAGS -Os -ffunction-sections "
 export CXXFLAGS="$CXXFLAGS -Os -ffunction-sections "
 %reconfigure --disable-static --disable-fsck --disable-libblkid  --disable-uuidd --disable-libuuid --enable-elf-shlibs
 make V=1  %{?_smp_mflags}
@@ -176,11 +178,11 @@ rm -rf %{buildroot}
 
 %files data
 %defattr(-,root,root,-)
+%exclude /usr/share/et/et_c.awk
+%exclude /usr/share/et/et_h.awk
+%exclude /usr/share/ss/ct_c.awk
+%exclude /usr/share/ss/ct_c.sed
 /usr/share/defaults/e2fsprogs/mke2fs.conf
-/usr/share/et/et_c.awk
-/usr/share/et/et_h.awk
-/usr/share/ss/ct_c.awk
-/usr/share/ss/ct_c.sed
 
 %files dev
 %defattr(-,root,root,-)
@@ -229,6 +231,10 @@ rm -rf %{buildroot}
 /usr/bin/mkfs.ext3
 /usr/bin/mkfs.ext4
 /usr/bin/mkfs.ext4dev
+/usr/share/et/et_c.awk
+/usr/share/et/et_h.awk
+/usr/share/ss/ct_c.awk
+/usr/share/ss/ct_c.sed
 
 %files lib
 %defattr(-,root,root,-)
