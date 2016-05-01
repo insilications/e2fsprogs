@@ -1,0 +1,11 @@
+--- e2fsprogs-1.42.13/lib/ext2fs/mkjournal.c~	2015-01-29 19:12:19.000000000 +0000
++++ e2fsprogs-1.42.13/lib/ext2fs/mkjournal.c	2016-05-01 15:22:35.353911832 +0000
+@@ -422,7 +422,7 @@
+ 		return (8192);
+ 	if (num_blocks < 1024*1024)
+ 		return (16384);
+-	return 32768;
++	return 32768 * 2;
+ }
+ 
+ int ext2fs_journal_sb_start(int blocksize)
