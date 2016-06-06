@@ -4,7 +4,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.42.13
-Release  : 38
+Release  : 39
 URL      : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.42.13.tar.gz
 Source0  : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.42.13.tar.gz
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
@@ -125,19 +125,19 @@ locales components for the e2fsprogs package.
 %patch4 -p1
 
 %build
-export CFLAGS="$CFLAGS -Os -ffunction-sections "
-export FCFLAGS="$CFLAGS -Os -ffunction-sections "
-export FFLAGS="$CFLAGS -Os -ffunction-sections "
-export CXXFLAGS="$CXXFLAGS -Os -ffunction-sections "
+export CFLAGS="$CFLAGS -ffunction-sections -Os "
+export FCFLAGS="$CFLAGS -ffunction-sections -Os "
+export FFLAGS="$CFLAGS -ffunction-sections -Os "
+export CXXFLAGS="$CXXFLAGS -ffunction-sections -Os "
 %reconfigure --disable-static --disable-fsck --disable-libblkid  --disable-uuidd --disable-libuuid --enable-elf-shlibs
-make V=1  %{?_smp_mflags}
+make V=1
 
 %check
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make VERBOSE=1 V=1 check
 
 %install
 rm -rf %{buildroot}
