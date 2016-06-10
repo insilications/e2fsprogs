@@ -1,3 +1,142 @@
+e2fsprogs (1.43.1-1) unstable; urgency=medium
+
+  * New upstream version
+  * Fix the Direct I/O fallback code in the Unix I/O manager so it
+    implements read-modify-write correctly.
+  * The mke2fs program will now warn if the user specifies a label which
+    is too long.  (Closes: #791630)
+  * Clean up various man pages (Closes: #766379, #761144, #770750,
+    #428361, #766127)
+  * Fix bug so that debugfs's rdump command works on the root directory
+    (Closes: #766125)
+  * Fix various Debian packaging issues (Closes: #825868)
+  * Build fully security hardened binaries
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Tue, 07 Jun 2016 23:09:55 -0400
+
+e2fsprogs (1.43-3) unstable; urgency=medium
+
+  * Fix various debian packaging nits
+  * Fix spelling mistakes in the copyright files
+  * Fix various spelling mistakes in man pages
+  * Fix project quota bugs in e2fsck and mke2fs
+  * Build binaries with hardening support
+  * Improve e2fsck messages when the journal superblock is corrupt and
+    the user declines to fix the journal.  (Closes: #768162)
+  * Fix debugfs's handling of "set_bg <bg> checksum calc" on 64-bit file
+    systems.
+  * Simplify the debian rules file
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Wed, 25 May 2016 00:51:33 -0400
+
+e2fsprogs (1.43-2) unstable; urgency=medium
+
+  * Update watch file to check for the GPG signatures
+  * Use dh_update_autotools_control to update config.{guess,sub}
+    automatically when building the package.
+  * Only try to run update-initramfs if it exists
+  * Transition to dbgsym packages
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Fri, 20 May 2016 14:07:40 -0400
+
+e2fsprogs (1.43-1) unstable; urgency=medium
+
+  * New upstream version
+  * Fix or improve offset support in mke2fs, e2undo, and libext2fs
+  * Update debian policy version to 3.9.8
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Tue, 17 May 2016 01:04:28 -0400
+
+e2fsprogs (1.43~WIP.2016.03.15-2) sid; urgency=low
+
+  * Fix FTBFS on big-endian systems
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Thu, 17 Mar 2016 22:55:52 -0400
+
+e2fsprogs (1.43~WIP.2016.05.12-1) unstable; urgency=medium
+
+  * New upstream version
+  * Clean up various man pages and usage messages
+  * Fix up gcc and Coverity warnings
+  * Stop building static binaries using dietlibc
+  * Fix potential out-of-boundary memory access in resize2fs
+  * Fix sparse_super2 bugs in mke2fs and resize2fs
+  * The mke2fs program will now support multiple -O options
+  * The e2image program now ignores checksum error so that debugging
+    snapshots of a file system can be taken of a broken file system
+  * E2fsck now more cleanly handles checksum errors while replaying the
+    journal
+  * Fix e2fsck to not try to set a UUID if the metadata_csum feature is
+    enabled since this will break the checksums
+  * Fix e2image so progress information won't get leaked to stdout
+  * Fix bugs in "mke2fs -E offset=NNNN" (Closes: #803629)
+  * Fix Hurd portability issues (Closes: #822576)
+  * Update initramfs in e2fsprogs's postinst script so the initial
+    ramdisk gets the updated e2fsprogs binaries (Closes: #804237)
+  * Work around texi2dvi bug which can cause build failures (Closes: #822227)
+  * E2fsck now prints "REBOOT SYSTEM" instead of "REBOOT LINUX" to
+    assuage the sensibilities of Hurd users (Closes: #769838)
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Thu, 12 May 2016 00:18:45 -0400
+
+e2fsprogs (1.43~WIP.2016.03.15-1) unstable; urgency=low
+
+  * New upstream release
+  * Fix resize2fs bug that could leave block allocation bitmaps
+    uninitialized
+  * The tune2fs program will ask the user for confirmation before
+    starting dangerous operations if the terminal is available, and it
+    will replay the journal if necessary
+  * Fix a bug which in rare cases would cause e2fsck -fD to corrupt an
+    extent-mapped directory.
+  * E2fsck will now check for extent mapped inodes with no extent header
+    and clear them if found
+  * E2fsck now checks to make sure the extended attribute header doesn't
+    result in the xattr extending beyond the bounds of the inode
+  * Teach mke2fs to parse a human-readable argument for -i option
+  * Teach mke2fs to automatically handle creating file systems > 500T by
+    automatically enable the meta_bg feature
+  * Mke2fs will now prompt for user verification before rewriting a file
+    system's superblock using the -S option
+  * Mke2fs no longer complains if the user tries to create a file system
+    using the entire block device (e.g., without using a partition).
+    The minor number convention is not used by all block devices, and
+    it's quite normal in some circumstances to create a file system
+    on /dev/sdc instead of /dev/sdc1
+  * Debugfs now can properly display and set extended timestamps
+  * Add an ext2/3/4 FUSE server
+  * Fix an "mke2fs -d" bug which could create inodes with invalid
+    extended attribute blocks
+  * Fix miscellaneous file encryption bugs
+  * Fix miscellaneous MMP bugs in debugfs
+  * The e2fsck program will no longer update the quota inodes when it is
+    interrupted
+  * The filefrag program now accounts for holes in sparse files created
+    by the file punch operation as an expected/optimal mapping
+  * Clean up gcc/clang warnings
+  * Add support for the checksum seed feature
+  * Add support for the project quota feature
+  * Add fallocate support to libext2fs and to debugfs
+  * Clean up various man pages (Closes: #798425)
+  * Update debian policy compliance to 3.9.7
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Tue, 15 Mar 2016 01:34:14 -0400
+
+e2fsprogs (1.43~WIP.2015.05.18-1) unstable; urgency=low
+
+  * Merge in updates from the maint branch (changes from 1.42.13)
+  * Add support for file encryption feature
+  * Mke2fs will now create file systems with metadata_csum and 64bit
+    enabled by default.
+  * The resize2fs command can now convert file systems between 64-bit
+    and 32-bit mode.
+  * The new undo file format is much faster/efficent than before
+  * E2fsck now has readahead support to speed up its behavior on RAID
+    arrays.
+  * E2fsck can now rebuild/optimize inode extent trees
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Mon, 18 May 2015 01:47:43 -0400
+
 e2fsprogs (1.42.13-1) unstable; urgency=low
 
   * New upstream version
@@ -30,6 +169,16 @@ e2fsprogs (1.42.13-1) unstable; urgency=low
     translation.
 
  -- Theodore Y. Ts'o <tytso@mit.edu>  Sun, 17 May 2015 20:38:27 -0400
+
+e2fsprogs (1.43~WIP-2015-03-29-1) unstable; urgency=low
+
+  * Merge in updates from the maint branch (changes from 1.42.12-1)
+  * Add support for inline directories
+  * Add support for the jbd2 checksum v3 format
+  * New dumpe2fs format
+  * Add support for file encryption feature
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Sun, 14 Dec 2014 22:49:03 -0500
 
 e2fsprogs (1.42.12-1.1) unstable; urgency=high
 
@@ -128,7 +277,7 @@ e2fsprogs (1.42.11-1) unstable; urgency=medium
   * Fixed cross-compilation support.  (Closes: #753375)
   * Update/fix various man pages
 
- -- Theodore Y. Ts'o <tytso@mit.edu>  Wed, 9 July 2014 23:43:27 -0400
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Wed, 9 Jul 2014 23:43:27 -0400
 
 e2fsprogs (1.42.10-1.1) unstable; urgency=medium
 
@@ -137,6 +286,12 @@ e2fsprogs (1.42.10-1.1) unstable; urgency=medium
     larger than 2GB on 32 bit architectures (Closes: #752107)
 
  -- Hilko Bengen <bengen@debian.org>  Sat, 21 Jun 2014 12:57:25 +0200
+
+e2fsprogs (1.43~WIP-2014-02-04-1) unstable; urgency=low
+
+  * Merge in updates from the maint branch (changes from 1.42.10-1)
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Wed, 04 Feb 2014 23:31:56 -0500
 
 e2fsprogs (1.42.10-1) unstable; urgency=medium
 
@@ -359,6 +514,12 @@ e2fsprogs (1.42.7-1) unstable; urgency=low
     Vietnamese translations
 
  -- Theodore Y. Ts'o <tytso@mit.edu>  Tue, 21 Jan 2013 21:52:58 -0500
+
+e2fsprogs (1.43~WIP-2012-09-22-1) unstable; urgency=low
+
+  * Add metadata checksum feature
+
+ -- Theodore Y. Ts'o <tytso@mit.edu>  Sat, 22 Sep 2012 21:50:20 -0400
 
 e2fsprogs (1.42.6-1) unstable; urgency=low
 

@@ -10,10 +10,10 @@ index 7393379..8c208b0 100644
  includedir = @includedir@
  mandir = @mandir@
  man1dir = $(mandir)/man1
-diff --git a/configure.in b/configure.in
+diff --git a/configure.ac b/configure.ac
 index 2e59fde..ab7ff96 100644
---- a/configure.in
-+++ b/configure.in
+--- a/configure.ac
++++ b/configure.ac
 @@ -1210,11 +1210,13 @@ if test "$sysconfdir" != '${prefix}/etc'; then
      root_sysconfdir=$sysconfdir
      AC_MSG_RESULT([Setting root_sysconfdir to $root_sysconfdir])
