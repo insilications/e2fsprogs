@@ -4,7 +4,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.43.3
-Release  : 40
+Release  : 41
 URL      : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.43.3.tar.gz
 Source0  : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.43.3.tar.gz
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
@@ -206,8 +206,14 @@ rm -rf %{buildroot}
 /usr/include/ext2fs/tdb.h
 /usr/include/ss/ss.h
 /usr/include/ss/ss_err.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libcom_err.so
+/usr/lib64/libe2p.so
+/usr/lib64/libext2fs.so
+/usr/lib64/libss.so
+/usr/lib64/pkgconfig/com_err.pc
+/usr/lib64/pkgconfig/e2p.pc
+/usr/lib64/pkgconfig/ext2fs.pc
+/usr/lib64/pkgconfig/ss.pc
 
 %files doc
 %defattr(-,root,root,-)
@@ -243,7 +249,14 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libcom_err.so.2
+/usr/lib64/libcom_err.so.2.1
+/usr/lib64/libe2p.so.2
+/usr/lib64/libe2p.so.2.3
+/usr/lib64/libext2fs.so.2
+/usr/lib64/libext2fs.so.2.4
+/usr/lib64/libss.so.2
+/usr/lib64/libss.so.2.0
 
 %files locales -f e2fsprogs.lang 
 %defattr(-,root,root,-)
