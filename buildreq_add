@@ -3,6 +3,11 @@
 # desirable. One name per line, no whitespace.
 #
 util-linux-dev
+util-linux-dev32
 bison
 texinfo
 procps-ng
+attr-dev
+attr-dev32
+acl-dev
+acl-dev32
