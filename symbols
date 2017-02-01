@@ -617,6 +617,7 @@ libext2fs.so.2:ext2fs_xattr_remove
 libext2fs.so.2:ext2fs_xattr_set
 libext2fs.so.2:ext2fs_xattrs_close
 libext2fs.so.2:ext2fs_xattrs_count
+libext2fs.so.2:ext2fs_xattrs_flags
 libext2fs.so.2:ext2fs_xattrs_iterate
 libext2fs.so.2:ext2fs_xattrs_open
 libext2fs.so.2:ext2fs_xattrs_read
