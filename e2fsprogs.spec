@@ -6,7 +6,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.43.4
-Release  : 43
+Release  : 44
 URL      : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.43.4.tar.gz
 Source0  : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.43.4.tar.gz
 Source99 : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.43.4.tar.gz.asc
@@ -160,7 +160,7 @@ popd
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1485963713
+export SOURCE_DATE_EPOCH=1488039030
 export CFLAGS="$CFLAGS -Os -ffunction-sections "
 export FCFLAGS="$CFLAGS -Os -ffunction-sections "
 export FFLAGS="$CFLAGS -Os -ffunction-sections "
@@ -184,7 +184,7 @@ export no_proxy=localhost
 make VERBOSE=1 V=1 check
 
 %install
-export SOURCE_DATE_EPOCH=1485963713
+export SOURCE_DATE_EPOCH=1488039030
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -203,7 +203,7 @@ popd
 
 %files
 %defattr(-,root,root,-)
-/usr/lib32/e2initrd_helper
+%exclude /usr/lib32/e2initrd_helper
 /usr/lib64/e2initrd_helper
 
 %files bin
@@ -301,6 +301,7 @@ popd
 /usr/bin/mkfs.ext2
 /usr/bin/mkfs.ext3
 /usr/bin/mkfs.ext4
+/usr/lib32/e2initrd_helper
 /usr/share/et/et_c.awk
 /usr/share/et/et_h.awk
 /usr/share/ss/ct_c.awk

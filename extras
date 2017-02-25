@@ -19,3 +19,4 @@
 /usr/share/et/et_h.awk
 /usr/share/ss/ct_c.awk
 /usr/share/ss/ct_c.sed
+/usr/lib32/e2initrd_helper
