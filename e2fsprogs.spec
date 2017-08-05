@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xF2F95956950D81A3 (tytso@mit.edu)
 #
 Name     : e2fsprogs
-Version  : 1.43.4
-Release  : 46
-URL      : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.43.4.tar.gz
-Source0  : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.43.4.tar.gz
-Source99 : http://downloads.sourceforge.net/e2fsprogs/e2fsprogs-1.43.4.tar.gz.asc
+Version  : 1.43.5
+Release  : 47
+URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.43.5/e2fsprogs-1.43.5.tar.gz
+Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.43.5/e2fsprogs-1.43.5.tar.gz
+Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.43.5/e2fsprogs-1.43.5.tar.gz.asc
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
@@ -151,20 +151,23 @@ locales components for the e2fsprogs package.
 
 
 %prep
-%setup -q -n e2fsprogs-1.43.4
+%setup -q -n e2fsprogs-1.43.5
 %patch1 -p1
 %patch2 -p1
 pushd ..
-cp -a e2fsprogs-1.43.4 build32
+cp -a e2fsprogs-1.43.5 build32
 popd
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1488050486
-export CFLAGS="$CFLAGS -Os -ffunction-sections "
-export FCFLAGS="$CFLAGS -Os -ffunction-sections "
-export FFLAGS="$CFLAGS -Os -ffunction-sections "
-export CXXFLAGS="$CXXFLAGS -Os -ffunction-sections "
+export SOURCE_DATE_EPOCH=1501961291
+export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 %reconfigure --disable-static --disable-fsck --disable-libblkid  --disable-uuidd --disable-libuuid --enable-elf-shlibs
 make V=1
 pushd ../build32/
@@ -180,11 +183,11 @@ popd
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 check
 
 %install
-export SOURCE_DATE_EPOCH=1488050486
+export SOURCE_DATE_EPOCH=1501961291
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
