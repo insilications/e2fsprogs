@@ -5,19 +5,19 @@
 # Source0 file verified with key 0xF2F95956950D81A3 (tytso@mit.edu)
 #
 Name     : e2fsprogs
-Version  : 1.43.9
-Release  : 55
-URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.43.9/e2fsprogs-1.43.9.tar.gz
-Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.43.9/e2fsprogs-1.43.9.tar.gz
-Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.43.9/e2fsprogs-1.43.9.tar.gz.asc
+Version  : 1.44.2
+Release  : 56
+URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.2/e2fsprogs-1.44.2.tar.gz
+Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.2/e2fsprogs-1.44.2.tar.gz
+Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.2/e2fsprogs-1.44.2.tar.gz.asc
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
 Requires: e2fsprogs-bin
 Requires: e2fsprogs-lib
 Requires: e2fsprogs-data
-Requires: e2fsprogs-doc
 Requires: e2fsprogs-locales
+Requires: e2fsprogs-man
 BuildRequires : acl-dev
 BuildRequires : acl-dev32
 BuildRequires : attr-dev
@@ -71,6 +71,7 @@ fsck tool that are included here.
 Summary: bin components for the e2fsprogs package.
 Group: Binaries
 Requires: e2fsprogs-data
+Requires: e2fsprogs-man
 
 %description bin
 bin components for the e2fsprogs package.
@@ -111,6 +112,7 @@ dev32 components for the e2fsprogs package.
 %package doc
 Summary: doc components for the e2fsprogs package.
 Group: Documentation
+Requires: e2fsprogs-man
 
 %description doc
 doc components for the e2fsprogs package.
@@ -150,12 +152,20 @@ Group: Default
 locales components for the e2fsprogs package.
 
 
+%package man
+Summary: man components for the e2fsprogs package.
+Group: Default
+
+%description man
+man components for the e2fsprogs package.
+
+
 %prep
-%setup -q -n e2fsprogs-1.43.9
+%setup -q -n e2fsprogs-1.44.2
 %patch1 -p1
 %patch2 -p1
 pushd ..
-cp -a e2fsprogs-1.43.9 build32
+cp -a e2fsprogs-1.44.2 build32
 popd
 
 %build
@@ -163,7 +173,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1518280438
+export SOURCE_DATE_EPOCH=1526829496
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
@@ -187,7 +197,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 check
 
 %install
-export SOURCE_DATE_EPOCH=1518280438
+export SOURCE_DATE_EPOCH=1526829496
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -282,10 +292,6 @@ popd
 %files doc
 %defattr(-,root,root,-)
 %doc /usr/share/info/*
-%doc /usr/share/man/man1/*
-%doc /usr/share/man/man3/*
-%doc /usr/share/man/man5/*
-%doc /usr/share/man/man8/*
 
 %files extras
 %defattr(-,root,root,-)
@@ -330,6 +336,41 @@ popd
 /usr/lib32/libext2fs.so.2.4
 /usr/lib32/libss.so.2
 /usr/lib32/libss.so.2.0
+
+%files man
+%defattr(-,root,root,-)
+/usr/share/man/man1/chattr.1
+/usr/share/man/man1/compile_et.1
+/usr/share/man/man1/lsattr.1
+/usr/share/man/man1/mk_cmds.1
+/usr/share/man/man3/com_err.3
+/usr/share/man/man5/e2fsck.conf.5
+/usr/share/man/man5/ext2.5
+/usr/share/man/man5/ext3.5
+/usr/share/man/man5/ext4.5
+/usr/share/man/man5/mke2fs.conf.5
+/usr/share/man/man8/badblocks.8
+/usr/share/man/man8/debugfs.8
+/usr/share/man/man8/dumpe2fs.8
+/usr/share/man/man8/e2freefrag.8
+/usr/share/man/man8/e2fsck.8
+/usr/share/man/man8/e2image.8
+/usr/share/man/man8/e2label.8
+/usr/share/man/man8/e2undo.8
+/usr/share/man/man8/e4crypt.8
+/usr/share/man/man8/e4defrag.8
+/usr/share/man/man8/filefrag.8
+/usr/share/man/man8/fsck.ext2.8
+/usr/share/man/man8/fsck.ext3.8
+/usr/share/man/man8/fsck.ext4.8
+/usr/share/man/man8/logsave.8
+/usr/share/man/man8/mke2fs.8
+/usr/share/man/man8/mkfs.ext2.8
+/usr/share/man/man8/mkfs.ext3.8
+/usr/share/man/man8/mkfs.ext4.8
+/usr/share/man/man8/mklost+found.8
+/usr/share/man/man8/resize2fs.8
+/usr/share/man/man8/tune2fs.8
 
 %files locales -f e2fsprogs.lang
 %defattr(-,root,root,-)
