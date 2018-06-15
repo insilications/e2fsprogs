@@ -6,7 +6,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.44.2
-Release  : 56
+Release  : 57
 URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.2/e2fsprogs-1.44.2.tar.gz
 Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.2/e2fsprogs-1.44.2.tar.gz
 Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.2/e2fsprogs-1.44.2.tar.gz.asc
