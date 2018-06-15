@@ -40,7 +40,7 @@ BuildRequires : perl(XML::Parser)
 BuildRequires : pip
 BuildRequires : pkg-config-dev
 BuildRequires : procps-ng
-BuildRequires : python-dev
+
 BuildRequires : python3-dev
 BuildRequires : setuptools
 BuildRequires : texinfo
