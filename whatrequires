@@ -2,13 +2,12 @@
 LVM2
 OpenSP
 R
-R-IRkernel
 R-NMF
+R-blockmodeling
 R-devtools
 R-doRNG
 R-git2r
 R-modelr
-R-pbdZMQ
 R-pkgmaker
 R-reprex
 R-rngtools
@@ -26,7 +25,9 @@ clr-init
 cockpit
 comedilib
 compat-gtksourceview-soname3
+cups
 dbus
+dconf-editor
 docker
 dstat
 edk2
@@ -34,6 +35,7 @@ filesystem
 flatpak
 fwupd
 gcr
+gimp
 git
 gmime
 gnome-session
@@ -41,6 +43,7 @@ gnome-shell
 gnome-terminal
 gpgme
 gtksourceview
+gutenprint
 gzip
 hamlib
 isa-l
@@ -64,6 +67,7 @@ libjpeg-turbo-soname8
 libnotify
 libvirt
 libvpx
+libzmq
 linux
 linux-aws
 linux-gce
@@ -83,6 +87,7 @@ ndctl
 nodejs
 notmuch
 numactl
+ocaml
 ostree
 p7zip
 patchutils
@@ -90,6 +95,7 @@ quilt
 shim
 swig
 tigervnc
+unison
 util-linux
 vala
 vlc
@@ -100,5 +106,6 @@ xdg-utils
 xmlto
 xorg-server
 xorgproto
+xrdp
 xtrans
 yasm

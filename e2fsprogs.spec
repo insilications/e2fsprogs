@@ -5,17 +5,18 @@
 # Source0 file verified with key 0xF2F95956950D81A3 (tytso@mit.edu)
 #
 Name     : e2fsprogs
-Version  : 1.44.2
-Release  : 57
-URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.2/e2fsprogs-1.44.2.tar.gz
-Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.2/e2fsprogs-1.44.2.tar.gz
-Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.2/e2fsprogs-1.44.2.tar.gz.asc
+Version  : 1.44.3
+Release  : 58
+URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.3/e2fsprogs-1.44.3.tar.gz
+Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.3/e2fsprogs-1.44.3.tar.gz
+Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.3/e2fsprogs-1.44.3.tar.gz.asc
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
 Requires: e2fsprogs-bin
 Requires: e2fsprogs-lib
 Requires: e2fsprogs-data
+Requires: e2fsprogs-license
 Requires: e2fsprogs-locales
 Requires: e2fsprogs-man
 BuildRequires : acl-dev
@@ -38,9 +39,9 @@ BuildRequires : m4
 BuildRequires : pbr
 BuildRequires : perl(XML::Parser)
 BuildRequires : pip
+BuildRequires : pkg-config
 BuildRequires : pkg-config-dev
 BuildRequires : procps-ng
-
 BuildRequires : python3-dev
 BuildRequires : setuptools
 BuildRequires : texinfo
@@ -71,6 +72,7 @@ fsck tool that are included here.
 Summary: bin components for the e2fsprogs package.
 Group: Binaries
 Requires: e2fsprogs-data
+Requires: e2fsprogs-license
 Requires: e2fsprogs-man
 
 %description bin
@@ -130,6 +132,7 @@ extras components for the e2fsprogs package.
 Summary: lib components for the e2fsprogs package.
 Group: Libraries
 Requires: e2fsprogs-data
+Requires: e2fsprogs-license
 
 %description lib
 lib components for the e2fsprogs package.
@@ -139,9 +142,18 @@ lib components for the e2fsprogs package.
 Summary: lib32 components for the e2fsprogs package.
 Group: Default
 Requires: e2fsprogs-data
+Requires: e2fsprogs-license
 
 %description lib32
 lib32 components for the e2fsprogs package.
+
+
+%package license
+Summary: license components for the e2fsprogs package.
+Group: Default
+
+%description license
+license components for the e2fsprogs package.
 
 
 %package locales
@@ -161,11 +173,11 @@ man components for the e2fsprogs package.
 
 
 %prep
-%setup -q -n e2fsprogs-1.44.2
+%setup -q -n e2fsprogs-1.44.3
 %patch1 -p1
 %patch2 -p1
 pushd ..
-cp -a e2fsprogs-1.44.2 build32
+cp -a e2fsprogs-1.44.3 build32
 popd
 
 %build
@@ -173,7 +185,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1526829496
+export SOURCE_DATE_EPOCH=1531321944
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
@@ -197,8 +209,14 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 check
 
 %install
-export SOURCE_DATE_EPOCH=1526829496
+export SOURCE_DATE_EPOCH=1531321944
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/e2fsprogs
+cp NOTICE %{buildroot}/usr/share/doc/e2fsprogs/NOTICE
+cp lib/uuid/COPYING %{buildroot}/usr/share/doc/e2fsprogs/lib_uuid_COPYING
+cp lib/ext2fs/tdb/patches/copyright %{buildroot}/usr/share/doc/e2fsprogs/lib_ext2fs_tdb_patches_copyright
+cp ext2ed/COPYRIGHT %{buildroot}/usr/share/doc/e2fsprogs/ext2ed_COPYRIGHT
+cp debian/copyright %{buildroot}/usr/share/doc/e2fsprogs/debian_copyright
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -239,6 +257,7 @@ popd
 /usr/bin/chattr
 /usr/bin/e2fsck
 /usr/bin/e2label
+/usr/bin/e2mmpstatus
 /usr/bin/e4crypt
 /usr/bin/fsck.ext2
 /usr/bin/fsck.ext3
@@ -269,6 +288,7 @@ popd
 /usr/include/ext2fs/ext2_types.h
 /usr/include/ext2fs/ext2fs.h
 /usr/include/ext2fs/ext3_extents.h
+/usr/include/ext2fs/hashmap.h
 /usr/include/ext2fs/qcow2.h
 /usr/include/ext2fs/tdb.h
 /usr/include/ss/ss.h
@@ -290,7 +310,8 @@ popd
 /usr/lib32/libss.so
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
+%doc /usr/share/doc/e2fsprogs/*
 %doc /usr/share/info/*
 
 %files extras
@@ -337,6 +358,11 @@ popd
 /usr/lib32/libss.so.2
 /usr/lib32/libss.so.2.0
 
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/e2fsprogs/ext2ed_COPYRIGHT
+/usr/share/doc/e2fsprogs/lib_uuid_COPYING
+
 %files man
 %defattr(-,root,root,-)
 /usr/share/man/man1/chattr.1
@@ -356,6 +382,7 @@ popd
 /usr/share/man/man8/e2fsck.8
 /usr/share/man/man8/e2image.8
 /usr/share/man/man8/e2label.8
+/usr/share/man/man8/e2mmpstatus.8
 /usr/share/man/man8/e2undo.8
 /usr/share/man/man8/e4crypt.8
 /usr/share/man/man8/e4defrag.8
