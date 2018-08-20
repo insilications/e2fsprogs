@@ -6,7 +6,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.44.4
-Release  : 59
+Release  : 60
 URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.4/e2fsprogs-1.44.4.tar.gz
 Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.4/e2fsprogs-1.44.4.tar.gz
 Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.4/e2fsprogs-1.44.4.tar.gz.asc
@@ -182,7 +182,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1534774100
+export SOURCE_DATE_EPOCH=1534776492
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
@@ -206,7 +206,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 check
 
 %install
-export SOURCE_DATE_EPOCH=1534774100
+export SOURCE_DATE_EPOCH=1534776492
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/e2fsprogs
 cp NOTICE %{buildroot}/usr/share/doc/e2fsprogs/NOTICE
