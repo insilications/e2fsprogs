@@ -3,11 +3,13 @@ Configure miss: sys/key.h presence
 Configure miss: sys/key.h
 Configure miss: add_key
 Configure miss: keyctl
+Configure miss: llseek
 Configure miss: fuse.h
 Configure miss: sys/key.h usability
 Configure miss: sys/key.h presence
 Configure miss: sys/key.h
 Configure miss: add_key
 Configure miss: keyctl
+Configure miss: llseek
 Configure miss: magic_file in -lmagic
 Configure miss: fuse.h

@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xF2F95956950D81A3 (tytso@mit.edu)
 #
 Name     : e2fsprogs
-Version  : 1.44.3
-Release  : 58
-URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.3/e2fsprogs-1.44.3.tar.gz
-Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.3/e2fsprogs-1.44.3.tar.gz
-Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.3/e2fsprogs-1.44.3.tar.gz.asc
+Version  : 1.44.4
+Release  : 59
+URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.4/e2fsprogs-1.44.4.tar.gz
+Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.4/e2fsprogs-1.44.4.tar.gz
+Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.4/e2fsprogs-1.44.4.tar.gz.asc
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
@@ -26,6 +26,7 @@ BuildRequires : attr-dev32
 BuildRequires : automake
 BuildRequires : automake-dev
 BuildRequires : bison
+BuildRequires : buildreq-distutils3
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
@@ -36,14 +37,10 @@ BuildRequires : glibc-libc32
 BuildRequires : libtool
 BuildRequires : libtool-dev
 BuildRequires : m4
-BuildRequires : pbr
 BuildRequires : perl(XML::Parser)
-BuildRequires : pip
 BuildRequires : pkg-config
 BuildRequires : pkg-config-dev
 BuildRequires : procps-ng
-BuildRequires : python3-dev
-BuildRequires : setuptools
 BuildRequires : texinfo
 BuildRequires : util-linux-dev
 BuildRequires : util-linux-dev32
@@ -173,11 +170,11 @@ man components for the e2fsprogs package.
 
 
 %prep
-%setup -q -n e2fsprogs-1.44.3
+%setup -q -n e2fsprogs-1.44.4
 %patch1 -p1
 %patch2 -p1
 pushd ..
-cp -a e2fsprogs-1.44.3 build32
+cp -a e2fsprogs-1.44.4 build32
 popd
 
 %build
@@ -185,7 +182,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531321944
+export SOURCE_DATE_EPOCH=1534774100
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
@@ -209,14 +206,14 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 check
 
 %install
-export SOURCE_DATE_EPOCH=1531321944
+export SOURCE_DATE_EPOCH=1534774100
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/e2fsprogs
 cp NOTICE %{buildroot}/usr/share/doc/e2fsprogs/NOTICE
-cp lib/uuid/COPYING %{buildroot}/usr/share/doc/e2fsprogs/lib_uuid_COPYING
-cp lib/ext2fs/tdb/patches/copyright %{buildroot}/usr/share/doc/e2fsprogs/lib_ext2fs_tdb_patches_copyright
-cp ext2ed/COPYRIGHT %{buildroot}/usr/share/doc/e2fsprogs/ext2ed_COPYRIGHT
 cp debian/copyright %{buildroot}/usr/share/doc/e2fsprogs/debian_copyright
+cp ext2ed/COPYRIGHT %{buildroot}/usr/share/doc/e2fsprogs/ext2ed_COPYRIGHT
+cp lib/ext2fs/tdb/patches/copyright %{buildroot}/usr/share/doc/e2fsprogs/lib_ext2fs_tdb_patches_copyright
+cp lib/uuid/COPYING %{buildroot}/usr/share/doc/e2fsprogs/lib_uuid_COPYING
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -228,9 +225,9 @@ fi
 popd
 %make_install
 %find_lang e2fsprogs
-## make_install_append content
+## install_append content
 %make_install install-libs
-## make_install_append end
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -301,6 +298,7 @@ popd
 /usr/lib64/pkgconfig/e2p.pc
 /usr/lib64/pkgconfig/ext2fs.pc
 /usr/lib64/pkgconfig/ss.pc
+/usr/share/man/man3/com_err.3
 
 %files dev32
 %defattr(-,root,root,-)
@@ -369,7 +367,6 @@ popd
 /usr/share/man/man1/compile_et.1
 /usr/share/man/man1/lsattr.1
 /usr/share/man/man1/mk_cmds.1
-/usr/share/man/man3/com_err.3
 /usr/share/man/man5/e2fsck.conf.5
 /usr/share/man/man5/ext2.5
 /usr/share/man/man5/ext3.5
