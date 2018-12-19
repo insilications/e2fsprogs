@@ -1,3 +1,6 @@
+Configure miss: attr/xattr.h usability
+Configure miss: attr/xattr.h presence
+Configure miss: attr/xattr.h
 Configure miss: sys/key.h usability
 Configure miss: sys/key.h presence
 Configure miss: sys/key.h
@@ -5,6 +8,9 @@ Configure miss: add_key
 Configure miss: keyctl
 Configure miss: llseek
 Configure miss: fuse.h
+Configure miss: attr/xattr.h usability
+Configure miss: attr/xattr.h presence
+Configure miss: attr/xattr.h
 Configure miss: sys/key.h usability
 Configure miss: sys/key.h presence
 Configure miss: sys/key.h

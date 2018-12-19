@@ -5,20 +5,20 @@
 # Source0 file verified with key 0xF2F95956950D81A3 (tytso@mit.edu)
 #
 Name     : e2fsprogs
-Version  : 1.44.4
-Release  : 60
-URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.4/e2fsprogs-1.44.4.tar.gz
-Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.4/e2fsprogs-1.44.4.tar.gz
-Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.4/e2fsprogs-1.44.4.tar.gz.asc
+Version  : 1.44.5
+Release  : 61
+URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.5/e2fsprogs-1.44.5.tar.gz
+Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.5/e2fsprogs-1.44.5.tar.gz
+Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.5/e2fsprogs-1.44.5.tar.gz.asc
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
-Requires: e2fsprogs-bin
-Requires: e2fsprogs-lib
-Requires: e2fsprogs-data
-Requires: e2fsprogs-license
-Requires: e2fsprogs-locales
-Requires: e2fsprogs-man
+Requires: e2fsprogs-bin = %{version}-%{release}
+Requires: e2fsprogs-data = %{version}-%{release}
+Requires: e2fsprogs-lib = %{version}-%{release}
+Requires: e2fsprogs-license = %{version}-%{release}
+Requires: e2fsprogs-locales = %{version}-%{release}
+Requires: e2fsprogs-man = %{version}-%{release}
 BuildRequires : acl-dev
 BuildRequires : acl-dev32
 BuildRequires : attr-dev
@@ -27,6 +27,7 @@ BuildRequires : automake
 BuildRequires : automake-dev
 BuildRequires : bison
 BuildRequires : buildreq-distutils3
+BuildRequires : file-dev
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
 BuildRequires : gcc-libstdc++32
@@ -68,9 +69,9 @@ fsck tool that are included here.
 %package bin
 Summary: bin components for the e2fsprogs package.
 Group: Binaries
-Requires: e2fsprogs-data
-Requires: e2fsprogs-license
-Requires: e2fsprogs-man
+Requires: e2fsprogs-data = %{version}-%{release}
+Requires: e2fsprogs-license = %{version}-%{release}
+Requires: e2fsprogs-man = %{version}-%{release}
 
 %description bin
 bin components for the e2fsprogs package.
@@ -87,10 +88,10 @@ data components for the e2fsprogs package.
 %package dev
 Summary: dev components for the e2fsprogs package.
 Group: Development
-Requires: e2fsprogs-lib
-Requires: e2fsprogs-bin
-Requires: e2fsprogs-data
-Provides: e2fsprogs-devel
+Requires: e2fsprogs-lib = %{version}-%{release}
+Requires: e2fsprogs-bin = %{version}-%{release}
+Requires: e2fsprogs-data = %{version}-%{release}
+Provides: e2fsprogs-devel = %{version}-%{release}
 
 %description dev
 dev components for the e2fsprogs package.
@@ -99,10 +100,10 @@ dev components for the e2fsprogs package.
 %package dev32
 Summary: dev32 components for the e2fsprogs package.
 Group: Default
-Requires: e2fsprogs-lib32
-Requires: e2fsprogs-bin
-Requires: e2fsprogs-data
-Requires: e2fsprogs-dev
+Requires: e2fsprogs-lib32 = %{version}-%{release}
+Requires: e2fsprogs-bin = %{version}-%{release}
+Requires: e2fsprogs-data = %{version}-%{release}
+Requires: e2fsprogs-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the e2fsprogs package.
@@ -111,7 +112,7 @@ dev32 components for the e2fsprogs package.
 %package doc
 Summary: doc components for the e2fsprogs package.
 Group: Documentation
-Requires: e2fsprogs-man
+Requires: e2fsprogs-man = %{version}-%{release}
 
 %description doc
 doc components for the e2fsprogs package.
@@ -128,8 +129,8 @@ extras components for the e2fsprogs package.
 %package lib
 Summary: lib components for the e2fsprogs package.
 Group: Libraries
-Requires: e2fsprogs-data
-Requires: e2fsprogs-license
+Requires: e2fsprogs-data = %{version}-%{release}
+Requires: e2fsprogs-license = %{version}-%{release}
 
 %description lib
 lib components for the e2fsprogs package.
@@ -138,8 +139,8 @@ lib components for the e2fsprogs package.
 %package lib32
 Summary: lib32 components for the e2fsprogs package.
 Group: Default
-Requires: e2fsprogs-data
-Requires: e2fsprogs-license
+Requires: e2fsprogs-data = %{version}-%{release}
+Requires: e2fsprogs-license = %{version}-%{release}
 
 %description lib32
 lib32 components for the e2fsprogs package.
@@ -170,11 +171,11 @@ man components for the e2fsprogs package.
 
 
 %prep
-%setup -q -n e2fsprogs-1.44.4
+%setup -q -n e2fsprogs-1.44.5
 %patch1 -p1
 %patch2 -p1
 pushd ..
-cp -a e2fsprogs-1.44.4 build32
+cp -a e2fsprogs-1.44.5 build32
 popd
 
 %build
@@ -182,7 +183,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1534776492
+export SOURCE_DATE_EPOCH=1545221356
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
@@ -191,6 +192,7 @@ export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic
 make
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export ASFLAGS="$ASFLAGS --32"
 export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
@@ -204,16 +206,18 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 check
+cd ../build32;
+make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1534776492
+export SOURCE_DATE_EPOCH=1545221356
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/e2fsprogs
-cp NOTICE %{buildroot}/usr/share/doc/e2fsprogs/NOTICE
-cp debian/copyright %{buildroot}/usr/share/doc/e2fsprogs/debian_copyright
-cp ext2ed/COPYRIGHT %{buildroot}/usr/share/doc/e2fsprogs/ext2ed_COPYRIGHT
-cp lib/ext2fs/tdb/patches/copyright %{buildroot}/usr/share/doc/e2fsprogs/lib_ext2fs_tdb_patches_copyright
-cp lib/uuid/COPYING %{buildroot}/usr/share/doc/e2fsprogs/lib_uuid_COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
+cp NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/NOTICE
+cp debian/copyright %{buildroot}/usr/share/package-licenses/e2fsprogs/debian_copyright
+cp ext2ed/COPYRIGHT %{buildroot}/usr/share/package-licenses/e2fsprogs/ext2ed_COPYRIGHT
+cp lib/ext2fs/tdb/patches/copyright %{buildroot}/usr/share/package-licenses/e2fsprogs/lib_ext2fs_tdb_patches_copyright
+cp lib/uuid/COPYING %{buildroot}/usr/share/package-licenses/e2fsprogs/lib_uuid_COPYING
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -306,10 +310,17 @@ popd
 /usr/lib32/libe2p.so
 /usr/lib32/libext2fs.so
 /usr/lib32/libss.so
+/usr/lib32/pkgconfig/32com_err.pc
+/usr/lib32/pkgconfig/32e2p.pc
+/usr/lib32/pkgconfig/32ext2fs.pc
+/usr/lib32/pkgconfig/32ss.pc
+/usr/lib32/pkgconfig/com_err.pc
+/usr/lib32/pkgconfig/e2p.pc
+/usr/lib32/pkgconfig/ext2fs.pc
+/usr/lib32/pkgconfig/ss.pc
 
 %files doc
 %defattr(0644,root,root,0755)
-%doc /usr/share/doc/e2fsprogs/*
 %doc /usr/share/info/*
 
 %files extras
@@ -357,12 +368,15 @@ popd
 /usr/lib32/libss.so.2.0
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/e2fsprogs/ext2ed_COPYRIGHT
-/usr/share/doc/e2fsprogs/lib_uuid_COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/e2fsprogs/NOTICE
+/usr/share/package-licenses/e2fsprogs/debian_copyright
+/usr/share/package-licenses/e2fsprogs/ext2ed_COPYRIGHT
+/usr/share/package-licenses/e2fsprogs/lib_ext2fs_tdb_patches_copyright
+/usr/share/package-licenses/e2fsprogs/lib_uuid_COPYING
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/chattr.1
 /usr/share/man/man1/compile_et.1
 /usr/share/man/man1/lsattr.1
