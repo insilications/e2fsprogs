@@ -6,7 +6,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.44.5
-Release  : 61
+Release  : 62
 URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.5/e2fsprogs-1.44.5.tar.gz
 Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.5/e2fsprogs-1.44.5.tar.gz
 Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.5/e2fsprogs-1.44.5.tar.gz.asc
@@ -71,7 +71,6 @@ Summary: bin components for the e2fsprogs package.
 Group: Binaries
 Requires: e2fsprogs-data = %{version}-%{release}
 Requires: e2fsprogs-license = %{version}-%{release}
-Requires: e2fsprogs-man = %{version}-%{release}
 
 %description bin
 bin components for the e2fsprogs package.
@@ -91,7 +90,9 @@ Group: Development
 Requires: e2fsprogs-lib = %{version}-%{release}
 Requires: e2fsprogs-bin = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
+Requires: e2fsprogs-man = %{version}-%{release}
 Provides: e2fsprogs-devel = %{version}-%{release}
+Requires: e2fsprogs = %{version}-%{release}
 
 %description dev
 dev components for the e2fsprogs package.
@@ -183,7 +184,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1545221356
+export SOURCE_DATE_EPOCH=1551152353
 export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
 export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
@@ -210,7 +211,7 @@ cd ../build32;
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1545221356
+export SOURCE_DATE_EPOCH=1551152353
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
 cp NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/NOTICE
