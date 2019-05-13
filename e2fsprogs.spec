@@ -5,20 +5,22 @@
 # Source0 file verified with key 0xF2F95956950D81A3 (tytso@mit.edu)
 #
 Name     : e2fsprogs
-Version  : 1.44.5
-Release  : 62
-URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.5/e2fsprogs-1.44.5.tar.gz
-Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.5/e2fsprogs-1.44.5.tar.gz
-Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.44.5/e2fsprogs-1.44.5.tar.gz.asc
+Version  : 1.45.1
+Release  : 63
+URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.1/e2fsprogs-1.45.1.tar.gz
+Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.1/e2fsprogs-1.45.1.tar.gz
+Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.1/e2fsprogs-1.45.1.tar.gz.asc
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
 Requires: e2fsprogs-bin = %{version}-%{release}
+Requires: e2fsprogs-config = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
 Requires: e2fsprogs-lib = %{version}-%{release}
 Requires: e2fsprogs-license = %{version}-%{release}
 Requires: e2fsprogs-locales = %{version}-%{release}
 Requires: e2fsprogs-man = %{version}-%{release}
+Requires: e2fsprogs-services = %{version}-%{release}
 BuildRequires : acl-dev
 BuildRequires : acl-dev32
 BuildRequires : attr-dev
@@ -41,7 +43,10 @@ BuildRequires : m4
 BuildRequires : perl(XML::Parser)
 BuildRequires : pkg-config
 BuildRequires : pkg-config-dev
+BuildRequires : pkgconfig(systemd)
+BuildRequires : pkgconfig(udev)
 BuildRequires : procps-ng
+BuildRequires : systemd-dev32
 BuildRequires : texinfo
 BuildRequires : util-linux-dev
 BuildRequires : util-linux-dev32
@@ -70,10 +75,20 @@ fsck tool that are included here.
 Summary: bin components for the e2fsprogs package.
 Group: Binaries
 Requires: e2fsprogs-data = %{version}-%{release}
+Requires: e2fsprogs-config = %{version}-%{release}
 Requires: e2fsprogs-license = %{version}-%{release}
+Requires: e2fsprogs-services = %{version}-%{release}
 
 %description bin
 bin components for the e2fsprogs package.
+
+
+%package config
+Summary: config components for the e2fsprogs package.
+Group: Default
+
+%description config
+config components for the e2fsprogs package.
 
 
 %package data
@@ -90,8 +105,8 @@ Group: Development
 Requires: e2fsprogs-lib = %{version}-%{release}
 Requires: e2fsprogs-bin = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
-Requires: e2fsprogs-man = %{version}-%{release}
 Provides: e2fsprogs-devel = %{version}-%{release}
+Requires: e2fsprogs = %{version}-%{release}
 Requires: e2fsprogs = %{version}-%{release}
 
 %description dev
@@ -171,12 +186,20 @@ Group: Default
 man components for the e2fsprogs package.
 
 
+%package services
+Summary: services components for the e2fsprogs package.
+Group: Systemd services
+
+%description services
+services components for the e2fsprogs package.
+
+
 %prep
-%setup -q -n e2fsprogs-1.44.5
+%setup -q -n e2fsprogs-1.45.1
 %patch1 -p1
 %patch2 -p1
 pushd ..
-cp -a e2fsprogs-1.44.5 build32
+cp -a e2fsprogs-1.45.1 build32
 popd
 
 %build
@@ -184,19 +207,22 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1551152353
-export CFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
-export FCFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
-export FFLAGS="$CFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
-export CXXFLAGS="$CXXFLAGS -Os -fdata-sections -ffunction-sections -fno-semantic-interposition "
+export SOURCE_DATE_EPOCH=1557757077
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
+export FCFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
 %reconfigure --disable-static --disable-fsck --disable-libblkid  --disable-uuidd --disable-libuuid --enable-elf-shlibs
 make
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export ASFLAGS="$ASFLAGS --32"
-export CFLAGS="$CFLAGS -m32"
-export CXXFLAGS="$CXXFLAGS -m32"
-export LDFLAGS="$LDFLAGS -m32"
+export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
 %reconfigure --disable-static --disable-fsck --disable-libblkid  --disable-uuidd --disable-libuuid --enable-elf-shlibs  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make
 popd
@@ -211,7 +237,7 @@ cd ../build32;
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1551152353
+export SOURCE_DATE_EPOCH=1557757077
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
 cp NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/NOTICE
@@ -237,6 +263,10 @@ popd
 %files
 %defattr(-,root,root,-)
 %exclude /usr/lib32/e2initrd_helper
+/usr/lib32/e2fsprogs/e2scrub_all_cron
+/usr/lib32/e2fsprogs/e2scrub_fail
+/usr/lib64/e2fsprogs/e2scrub_all_cron
+/usr/lib64/e2fsprogs/e2scrub_fail
 /usr/lib64/e2initrd_helper
 
 %files bin
@@ -260,6 +290,8 @@ popd
 /usr/bin/e2fsck
 /usr/bin/e2label
 /usr/bin/e2mmpstatus
+/usr/bin/e2scrub
+/usr/bin/e2scrub_all
 /usr/bin/e4crypt
 /usr/bin/fsck.ext2
 /usr/bin/fsck.ext3
@@ -268,6 +300,10 @@ popd
 /usr/bin/mklost+found
 /usr/bin/resize2fs
 /usr/bin/tune2fs
+
+%files config
+%defattr(-,root,root,-)
+/usr/lib/udev/rules.d/96-e2scrub.rules
 
 %files data
 %defattr(-,root,root,-)
@@ -395,6 +431,8 @@ popd
 /usr/share/man/man8/e2image.8
 /usr/share/man/man8/e2label.8
 /usr/share/man/man8/e2mmpstatus.8
+/usr/share/man/man8/e2scrub.8
+/usr/share/man/man8/e2scrub_all.8
 /usr/share/man/man8/e2undo.8
 /usr/share/man/man8/e4crypt.8
 /usr/share/man/man8/e4defrag.8
@@ -410,6 +448,14 @@ popd
 /usr/share/man/man8/mklost+found.8
 /usr/share/man/man8/resize2fs.8
 /usr/share/man/man8/tune2fs.8
+
+%files services
+%defattr(-,root,root,-)
+/usr/lib/systemd/system/e2scrub@.service
+/usr/lib/systemd/system/e2scrub_all.service
+/usr/lib/systemd/system/e2scrub_all.timer
+/usr/lib/systemd/system/e2scrub_fail@.service
+/usr/lib/systemd/system/e2scrub_reap.service
 
 %files locales -f e2fsprogs.lang
 %defattr(-,root,root,-)
