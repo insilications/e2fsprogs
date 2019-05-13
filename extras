@@ -19,3 +19,4 @@
 /usr/share/et/et_h.awk
 /usr/share/ss/ct_c.awk
 /usr/share/ss/ct_c.sed
+/usr/lib/udev/rules.d/96-e2scrub.rules

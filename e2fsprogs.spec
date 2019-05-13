@@ -6,7 +6,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.45.1
-Release  : 63
+Release  : 64
 URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.1/e2fsprogs-1.45.1.tar.gz
 Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.1/e2fsprogs-1.45.1.tar.gz
 Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.1/e2fsprogs-1.45.1.tar.gz.asc
@@ -207,7 +207,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1557757077
+export SOURCE_DATE_EPOCH=1557791869
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -237,7 +237,7 @@ cd ../build32;
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1557757077
+export SOURCE_DATE_EPOCH=1557791869
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
 cp NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/NOTICE
@@ -303,7 +303,7 @@ popd
 
 %files config
 %defattr(-,root,root,-)
-/usr/lib/udev/rules.d/96-e2scrub.rules
+%exclude /usr/lib/udev/rules.d/96-e2scrub.rules
 
 %files data
 %defattr(-,root,root,-)
@@ -377,6 +377,7 @@ popd
 /usr/bin/mkfs.ext2
 /usr/bin/mkfs.ext3
 /usr/bin/mkfs.ext4
+/usr/lib/udev/rules.d/96-e2scrub.rules
 /usr/share/et/et_c.awk
 /usr/share/et/et_h.awk
 /usr/share/ss/ct_c.awk
