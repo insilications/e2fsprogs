@@ -6,7 +6,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.45.1
-Release  : 64
+Release  : 67
 URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.1/e2fsprogs-1.45.1.tar.gz
 Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.1/e2fsprogs-1.45.1.tar.gz
 Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.1/e2fsprogs-1.45.1.tar.gz.asc
@@ -17,6 +17,7 @@ Requires: e2fsprogs-bin = %{version}-%{release}
 Requires: e2fsprogs-config = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
 Requires: e2fsprogs-lib = %{version}-%{release}
+Requires: e2fsprogs-libexec = %{version}-%{release}
 Requires: e2fsprogs-license = %{version}-%{release}
 Requires: e2fsprogs-locales = %{version}-%{release}
 Requires: e2fsprogs-man = %{version}-%{release}
@@ -75,6 +76,7 @@ fsck tool that are included here.
 Summary: bin components for the e2fsprogs package.
 Group: Binaries
 Requires: e2fsprogs-data = %{version}-%{release}
+Requires: e2fsprogs-libexec = %{version}-%{release}
 Requires: e2fsprogs-config = %{version}-%{release}
 Requires: e2fsprogs-license = %{version}-%{release}
 Requires: e2fsprogs-services = %{version}-%{release}
@@ -106,7 +108,6 @@ Requires: e2fsprogs-lib = %{version}-%{release}
 Requires: e2fsprogs-bin = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
 Provides: e2fsprogs-devel = %{version}-%{release}
-Requires: e2fsprogs = %{version}-%{release}
 Requires: e2fsprogs = %{version}-%{release}
 
 %description dev
@@ -146,6 +147,7 @@ extras components for the e2fsprogs package.
 Summary: lib components for the e2fsprogs package.
 Group: Libraries
 Requires: e2fsprogs-data = %{version}-%{release}
+Requires: e2fsprogs-libexec = %{version}-%{release}
 Requires: e2fsprogs-license = %{version}-%{release}
 
 %description lib
@@ -160,6 +162,16 @@ Requires: e2fsprogs-license = %{version}-%{release}
 
 %description lib32
 lib32 components for the e2fsprogs package.
+
+
+%package libexec
+Summary: libexec components for the e2fsprogs package.
+Group: Default
+Requires: e2fsprogs-config = %{version}-%{release}
+Requires: e2fsprogs-license = %{version}-%{release}
+
+%description libexec
+libexec components for the e2fsprogs package.
 
 
 %package license
@@ -207,7 +219,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1557791869
+export SOURCE_DATE_EPOCH=1557854635
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -237,7 +250,7 @@ cd ../build32;
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1557791869
+export SOURCE_DATE_EPOCH=1557854635
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
 cp NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/NOTICE
@@ -258,15 +271,17 @@ popd
 %find_lang e2fsprogs
 ## install_append content
 %make_install install-libs
+mkdir -p %{buildroot}/usr/libexec
+mv %{buildroot}/usr/lib64/e2fsprogs/e2scrub_fail %{buildroot}/usr/libexec/
+sed -i 's|/usr/lib64/e2fsprogs/|/usr/libexec/|' %{buildroot}/usr/lib/systemd/system/e2scrub_fail@.service
 ## install_append end
 
 %files
 %defattr(-,root,root,-)
+%exclude /usr/lib32/e2fsprogs/e2scrub_all_cron
+%exclude /usr/lib32/e2fsprogs/e2scrub_fail
 %exclude /usr/lib32/e2initrd_helper
-/usr/lib32/e2fsprogs/e2scrub_all_cron
-/usr/lib32/e2fsprogs/e2scrub_fail
-/usr/lib64/e2fsprogs/e2scrub_all_cron
-/usr/lib64/e2fsprogs/e2scrub_fail
+%exclude /usr/lib64/e2fsprogs/e2scrub_all_cron
 /usr/lib64/e2initrd_helper
 
 %files bin
@@ -404,6 +419,10 @@ popd
 /usr/lib32/libext2fs.so.2.4
 /usr/lib32/libss.so.2
 /usr/lib32/libss.so.2.0
+
+%files libexec
+%defattr(-,root,root,-)
+/usr/libexec/e2scrub_fail
 
 %files license
 %defattr(0644,root,root,0755)
