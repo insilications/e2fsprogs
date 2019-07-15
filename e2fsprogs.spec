@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xF2F95956950D81A3 (tytso@mit.edu)
 #
 Name     : e2fsprogs
-Version  : 1.45.2
-Release  : 68
-URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.2/e2fsprogs-1.45.2.tar.gz
-Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.2/e2fsprogs-1.45.2.tar.gz
-Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.2/e2fsprogs-1.45.2.tar.gz.asc
+Version  : 1.45.3
+Release  : 69
+URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.3/e2fsprogs-1.45.3.tar.gz
+Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.3/e2fsprogs-1.45.3.tar.gz
+Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.3/e2fsprogs-1.45.3.tar.gz.asc
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
@@ -208,19 +208,20 @@ services components for the e2fsprogs package.
 
 
 %prep
-%setup -q -n e2fsprogs-1.45.2
+%setup -q -n e2fsprogs-1.45.3
 %patch1 -p1
 %patch2 -p1
 pushd ..
-cp -a e2fsprogs-1.45.2 build32
+cp -a e2fsprogs-1.45.3 build32
 popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1559028547
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1563199136
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -241,7 +242,7 @@ make
 popd
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -250,7 +251,7 @@ cd ../build32;
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1559028547
+export SOURCE_DATE_EPOCH=1563199136
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
 cp NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/NOTICE
