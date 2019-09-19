@@ -6,15 +6,14 @@
 #
 Name     : e2fsprogs
 Version  : 1.45.3
-Release  : 70
+Release  : 71
 URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.3/e2fsprogs-1.45.3.tar.gz
 Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.3/e2fsprogs-1.45.3.tar.gz
-Source99 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.3/e2fsprogs-1.45.3.tar.gz.asc
+Source1 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.3/e2fsprogs-1.45.3.tar.gz.asc
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
 Requires: e2fsprogs-bin = %{version}-%{release}
-Requires: e2fsprogs-config = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
 Requires: e2fsprogs-lib = %{version}-%{release}
 Requires: e2fsprogs-libexec = %{version}-%{release}
@@ -78,20 +77,11 @@ Summary: bin components for the e2fsprogs package.
 Group: Binaries
 Requires: e2fsprogs-data = %{version}-%{release}
 Requires: e2fsprogs-libexec = %{version}-%{release}
-Requires: e2fsprogs-config = %{version}-%{release}
 Requires: e2fsprogs-license = %{version}-%{release}
 Requires: e2fsprogs-services = %{version}-%{release}
 
 %description bin
 bin components for the e2fsprogs package.
-
-
-%package config
-Summary: config components for the e2fsprogs package.
-Group: Default
-
-%description config
-config components for the e2fsprogs package.
 
 
 %package data
@@ -109,7 +99,6 @@ Requires: e2fsprogs-lib = %{version}-%{release}
 Requires: e2fsprogs-bin = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
 Provides: e2fsprogs-devel = %{version}-%{release}
-Requires: e2fsprogs = %{version}-%{release}
 Requires: e2fsprogs = %{version}-%{release}
 
 %description dev
@@ -169,7 +158,6 @@ lib32 components for the e2fsprogs package.
 %package libexec
 Summary: libexec components for the e2fsprogs package.
 Group: Default
-Requires: e2fsprogs-config = %{version}-%{release}
 Requires: e2fsprogs-license = %{version}-%{release}
 
 %description libexec
@@ -221,7 +209,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1563200938
+export SOURCE_DATE_EPOCH=1568854820
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -235,9 +223,9 @@ make
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
-export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
-export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
-export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 %reconfigure --disable-static --disable-fsck --disable-libblkid  --disable-uuidd --disable-libuuid --enable-elf-shlibs  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make
 popd
@@ -252,7 +240,7 @@ cd ../build32;
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1563200938
+export SOURCE_DATE_EPOCH=1568854820
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
 cp NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/NOTICE
@@ -271,6 +259,13 @@ fi
 popd
 %make_install
 %find_lang e2fsprogs
+## Remove excluded files
+rm -f %{buildroot}/usr/bin/uuidgen
+rm -f %{buildroot}/usr/lib32/e2fsprogs/e2scrub_all_cron
+rm -f %{buildroot}/usr/lib32/e2fsprogs/e2scrub_fail
+rm -f %{buildroot}/usr/lib32/e2initrd_helper
+rm -f %{buildroot}/usr/lib64/e2fsprogs/e2scrub_all_cron
+rm -f %{buildroot}/usr/share/man/man1/uuidgen.1
 ## install_append content
 %make_install install-libs
 mkdir -p %{buildroot}/usr/libexec
@@ -280,27 +275,10 @@ sed -i 's|/usr/lib64/e2fsprogs/|/usr/libexec/|' %{buildroot}/usr/lib/systemd/sys
 
 %files
 %defattr(-,root,root,-)
-%exclude /usr/lib32/e2fsprogs/e2scrub_fail
-%exclude /usr/lib32/e2initrd_helper
 /usr/lib64/e2initrd_helper
 
 %files bin
 %defattr(-,root,root,-)
-%exclude /usr/bin/badblocks
-%exclude /usr/bin/compile_et
-%exclude /usr/bin/debugfs
-%exclude /usr/bin/dumpe2fs
-%exclude /usr/bin/e2freefrag
-%exclude /usr/bin/e2image
-%exclude /usr/bin/e2undo
-%exclude /usr/bin/e4defrag
-%exclude /usr/bin/filefrag
-%exclude /usr/bin/logsave
-%exclude /usr/bin/mk_cmds
-%exclude /usr/bin/mke2fs
-%exclude /usr/bin/mkfs.ext2
-%exclude /usr/bin/mkfs.ext3
-%exclude /usr/bin/mkfs.ext4
 /usr/bin/chattr
 /usr/bin/e2fsck
 /usr/bin/e2label
@@ -316,21 +294,13 @@ sed -i 's|/usr/lib64/e2fsprogs/|/usr/libexec/|' %{buildroot}/usr/lib/systemd/sys
 /usr/bin/resize2fs
 /usr/bin/tune2fs
 
-%files config
-%defattr(-,root,root,-)
-%exclude /usr/lib/udev/rules.d/96-e2scrub.rules
-
 %files data
 %defattr(-,root,root,-)
-%exclude /usr/share/et/et_c.awk
-%exclude /usr/share/et/et_h.awk
-%exclude /usr/share/ss/ct_c.awk
-%exclude /usr/share/ss/ct_c.sed
 /usr/share/defaults/e2fsprogs/mke2fs.conf
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
+/usr/include/com_err.h
 /usr/include/e2p/e2p.h
 /usr/include/et/com_err.h
 /usr/include/ext2fs/bitops.h
