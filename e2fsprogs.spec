@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xF2F95956950D81A3 (tytso@mit.edu)
 #
 Name     : e2fsprogs
-Version  : 1.45.3
-Release  : 71
-URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.3/e2fsprogs-1.45.3.tar.gz
-Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.3/e2fsprogs-1.45.3.tar.gz
-Source1 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.3/e2fsprogs-1.45.3.tar.gz.asc
+Version  : 1.45.4
+Release  : 72
+URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.4/e2fsprogs-1.45.4.tar.gz
+Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.4/e2fsprogs-1.45.4.tar.gz
+Source1 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.4/e2fsprogs-1.45.4.tar.gz.asc
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
@@ -99,6 +99,7 @@ Requires: e2fsprogs-lib = %{version}-%{release}
 Requires: e2fsprogs-bin = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
 Provides: e2fsprogs-devel = %{version}-%{release}
+Requires: e2fsprogs = %{version}-%{release}
 Requires: e2fsprogs = %{version}-%{release}
 
 %description dev
@@ -197,11 +198,11 @@ services components for the e2fsprogs package.
 
 
 %prep
-%setup -q -n e2fsprogs-1.45.3
+%setup -q -n e2fsprogs-1.45.4
 %patch1 -p1
 %patch2 -p1
 pushd ..
-cp -a e2fsprogs-1.45.3 build32
+cp -a e2fsprogs-1.45.4 build32
 popd
 
 %build
@@ -209,7 +210,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568854820
+export SOURCE_DATE_EPOCH=1569339350
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -240,7 +242,7 @@ cd ../build32;
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1568854820
+export SOURCE_DATE_EPOCH=1569339350
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
 cp NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/NOTICE
