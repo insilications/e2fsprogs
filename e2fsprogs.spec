@@ -6,7 +6,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.45.4
-Release  : 72
+Release  : 73
 URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.4/e2fsprogs-1.45.4.tar.gz
 Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.4/e2fsprogs-1.45.4.tar.gz
 Source1 : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.4/e2fsprogs-1.45.4.tar.gz.asc
@@ -15,6 +15,7 @@ Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
 Requires: e2fsprogs-bin = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
+Requires: e2fsprogs-info = %{version}-%{release}
 Requires: e2fsprogs-lib = %{version}-%{release}
 Requires: e2fsprogs-libexec = %{version}-%{release}
 Requires: e2fsprogs-license = %{version}-%{release}
@@ -100,7 +101,6 @@ Requires: e2fsprogs-bin = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
 Provides: e2fsprogs-devel = %{version}-%{release}
 Requires: e2fsprogs = %{version}-%{release}
-Requires: e2fsprogs = %{version}-%{release}
 
 %description dev
 dev components for the e2fsprogs package.
@@ -118,21 +118,20 @@ Requires: e2fsprogs-dev = %{version}-%{release}
 dev32 components for the e2fsprogs package.
 
 
-%package doc
-Summary: doc components for the e2fsprogs package.
-Group: Documentation
-Requires: e2fsprogs-man = %{version}-%{release}
-
-%description doc
-doc components for the e2fsprogs package.
-
-
 %package extras
 Summary: extras components for the e2fsprogs package.
 Group: Default
 
 %description extras
 extras components for the e2fsprogs package.
+
+
+%package info
+Summary: info components for the e2fsprogs package.
+Group: Default
+
+%description info
+info components for the e2fsprogs package.
 
 
 %package lib
@@ -199,6 +198,7 @@ services components for the e2fsprogs package.
 
 %prep
 %setup -q -n e2fsprogs-1.45.4
+cd %{_builddir}/e2fsprogs-1.45.4
 %patch1 -p1
 %patch2 -p1
 pushd ..
@@ -210,8 +210,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1569339350
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1573777983
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -242,14 +241,14 @@ cd ../build32;
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1569339350
+export SOURCE_DATE_EPOCH=1573777983
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
-cp NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/NOTICE
-cp debian/copyright %{buildroot}/usr/share/package-licenses/e2fsprogs/debian_copyright
-cp ext2ed/COPYRIGHT %{buildroot}/usr/share/package-licenses/e2fsprogs/ext2ed_COPYRIGHT
-cp lib/ext2fs/tdb/patches/copyright %{buildroot}/usr/share/package-licenses/e2fsprogs/lib_ext2fs_tdb_patches_copyright
-cp lib/uuid/COPYING %{buildroot}/usr/share/package-licenses/e2fsprogs/lib_uuid_COPYING
+cp %{_builddir}/e2fsprogs-1.45.4/NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/e7b0a43ab2f7a589ca3bf497fe86e52b15502355
+cp %{_builddir}/e2fsprogs-1.45.4/debian/copyright %{buildroot}/usr/share/package-licenses/e2fsprogs/fc6b02ddb7365d99d34715f755cd7a1a44f59e8e
+cp %{_builddir}/e2fsprogs-1.45.4/ext2ed/COPYRIGHT %{buildroot}/usr/share/package-licenses/e2fsprogs/75cadb9188a364774ce3c4b721028c9b3b24d11c
+cp %{_builddir}/e2fsprogs-1.45.4/lib/ext2fs/tdb/patches/copyright %{buildroot}/usr/share/package-licenses/e2fsprogs/d1bf87ecabe986bacd73e7b7146effbaa99abe26
+cp %{_builddir}/e2fsprogs-1.45.4/lib/uuid/COPYING %{buildroot}/usr/share/package-licenses/e2fsprogs/e5c9f3867b9251dcd2d97a4d1dffaa38afe6625d
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -343,10 +342,6 @@ sed -i 's|/usr/lib64/e2fsprogs/|/usr/libexec/|' %{buildroot}/usr/lib/systemd/sys
 /usr/lib32/pkgconfig/ext2fs.pc
 /usr/lib32/pkgconfig/ss.pc
 
-%files doc
-%defattr(0644,root,root,0755)
-%doc /usr/share/info/*
-
 %files extras
 %defattr(-,root,root,-)
 /usr/bin/badblocks
@@ -369,6 +364,10 @@ sed -i 's|/usr/lib64/e2fsprogs/|/usr/libexec/|' %{buildroot}/usr/lib/systemd/sys
 /usr/share/et/et_h.awk
 /usr/share/ss/ct_c.awk
 /usr/share/ss/ct_c.sed
+
+%files info
+%defattr(0644,root,root,0755)
+/usr/share/info/libext2fs.info.gz
 
 %files lib
 %defattr(-,root,root,-)
@@ -398,11 +397,11 @@ sed -i 's|/usr/lib64/e2fsprogs/|/usr/libexec/|' %{buildroot}/usr/lib/systemd/sys
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/e2fsprogs/NOTICE
-/usr/share/package-licenses/e2fsprogs/debian_copyright
-/usr/share/package-licenses/e2fsprogs/ext2ed_COPYRIGHT
-/usr/share/package-licenses/e2fsprogs/lib_ext2fs_tdb_patches_copyright
-/usr/share/package-licenses/e2fsprogs/lib_uuid_COPYING
+/usr/share/package-licenses/e2fsprogs/75cadb9188a364774ce3c4b721028c9b3b24d11c
+/usr/share/package-licenses/e2fsprogs/d1bf87ecabe986bacd73e7b7146effbaa99abe26
+/usr/share/package-licenses/e2fsprogs/e5c9f3867b9251dcd2d97a4d1dffaa38afe6625d
+/usr/share/package-licenses/e2fsprogs/e7b0a43ab2f7a589ca3bf497fe86e52b15502355
+/usr/share/package-licenses/e2fsprogs/fc6b02ddb7365d99d34715f755cd7a1a44f59e8e
 
 %files man
 %defattr(0644,root,root,0755)
