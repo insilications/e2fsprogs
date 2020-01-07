@@ -185,6 +185,10 @@ libext2fs.so.2:ext2fs_dirent_has_tail
 libext2fs.so.2:ext2fs_dirent_name_len
 libext2fs.so.2:ext2fs_dirent_set_file_type
 libext2fs.so.2:ext2fs_dirent_set_name_len
+libext2fs.so.2:ext2fs_dirent_swab_in
+libext2fs.so.2:ext2fs_dirent_swab_in2
+libext2fs.so.2:ext2fs_dirent_swab_out
+libext2fs.so.2:ext2fs_dirent_swab_out2
 libext2fs.so.2:ext2fs_dirhash
 libext2fs.so.2:ext2fs_dirhash2
 libext2fs.so.2:ext2fs_div64_ceil
@@ -331,6 +335,7 @@ libext2fs.so.2:ext2fs_get_next_inode_full
 libext2fs.so.2:ext2fs_get_num_dirs
 libext2fs.so.2:ext2fs_get_pathname
 libext2fs.so.2:ext2fs_get_rec_len
+libext2fs.so.2:ext2fs_get_stat_i_blocks
 libext2fs.so.2:ext2fs_group_blocks_count
 libext2fs.so.2:ext2fs_group_desc
 libext2fs.so.2:ext2fs_group_desc_csum
@@ -523,6 +528,15 @@ libext2fs.so.2:ext2fs_superblock_csum_verify
 libext2fs.so.2:ext2fs_swab16
 libext2fs.so.2:ext2fs_swab32
 libext2fs.so.2:ext2fs_swab64
+libext2fs.so.2:ext2fs_swap_ext_attr
+libext2fs.so.2:ext2fs_swap_ext_attr_entry
+libext2fs.so.2:ext2fs_swap_ext_attr_header
+libext2fs.so.2:ext2fs_swap_group_desc
+libext2fs.so.2:ext2fs_swap_group_desc2
+libext2fs.so.2:ext2fs_swap_inode
+libext2fs.so.2:ext2fs_swap_inode_full
+libext2fs.so.2:ext2fs_swap_mmp
+libext2fs.so.2:ext2fs_swap_super
 libext2fs.so.2:ext2fs_symlink
 libext2fs.so.2:ext2fs_sync_device
 libext2fs.so.2:ext2fs_tdb_append
