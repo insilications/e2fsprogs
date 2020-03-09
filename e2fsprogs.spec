@@ -6,7 +6,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.45.5
-Release  : 74
+Release  : 75
 URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.5/e2fsprogs-1.45.5.tar.gz
 Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.5/e2fsprogs-1.45.5.tar.gz
 Source1  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.5/e2fsprogs-1.45.5.tar.gz.asc
@@ -54,6 +54,7 @@ BuildRequires : util-linux-dev
 BuildRequires : util-linux-dev32
 Patch1: stateless.patch
 Patch2: build.patch
+Patch3: 0001-configure.ac-correct-AM_GNU_GETTEXT.patch
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
@@ -100,7 +101,6 @@ Requires: e2fsprogs-lib = %{version}-%{release}
 Requires: e2fsprogs-bin = %{version}-%{release}
 Requires: e2fsprogs-data = %{version}-%{release}
 Provides: e2fsprogs-devel = %{version}-%{release}
-Requires: e2fsprogs = %{version}-%{release}
 Requires: e2fsprogs = %{version}-%{release}
 
 %description dev
@@ -202,6 +202,7 @@ services components for the e2fsprogs package.
 cd %{_builddir}/e2fsprogs-1.45.5
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 pushd ..
 cp -a e2fsprogs-1.45.5 build32
 popd
@@ -211,8 +212,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1578424524
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1583784560
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -243,7 +243,7 @@ cd ../build32;
 make VERBOSE=1 V=1 check || :
 
 %install
-export SOURCE_DATE_EPOCH=1578424524
+export SOURCE_DATE_EPOCH=1583784560
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
 cp %{_builddir}/e2fsprogs-1.45.5/NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/e7b0a43ab2f7a589ca3bf497fe86e52b15502355

@@ -1,3 +1,5 @@
+Configure miss: 32-bit host C ABI
+Configure miss: CFLocaleCopyPreferredLanguages
 Configure miss: attr/xattr.h usability
 Configure miss: attr/xattr.h presence
 Configure miss: attr/xattr.h
@@ -9,6 +11,7 @@ Configure miss: keyctl
 Configure miss: llseek
 Configure miss: fuse.h
 Configure miss: system crontab dir
+Configure miss: CFLocaleCopyPreferredLanguages
 Configure miss: attr/xattr.h usability
 Configure miss: attr/xattr.h presence
 Configure miss: attr/xattr.h
