@@ -1,6 +1,8 @@
---- e2fsprogs-1.42.13/configure.ac~	2014-06-25 19:19:14.000000000 +0000
-+++ e2fsprogs-1.42.13/configure.ac	2016-06-06 18:13:49.791064212 +0000
-@@ -1313,7 +1313,7 @@
+diff --git a/configure.ac b/configure.ac
+index 4e77645..fe4b072 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1611,7 +1611,7 @@ dnl
  dnl Build CFLAGS
  dnl
  if test $cross_compiling = no; then

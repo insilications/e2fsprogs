@@ -6,7 +6,7 @@
 #
 Name     : e2fsprogs
 Version  : 1.45.6
-Release  : 77
+Release  : 78
 URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.6/e2fsprogs-1.45.6.tar.gz
 Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.6/e2fsprogs-1.45.6.tar.gz
 Source1  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.6/e2fsprogs-1.45.6.tar.gz.asc
@@ -55,6 +55,7 @@ BuildRequires : util-linux-dev32
 Patch1: stateless.patch
 Patch2: build.patch
 Patch3: 0001-configure.ac-correct-AM_GNU_GETTEXT.patch
+Patch4: 0002-Adapt-to-autoconf-2.70-and-gettext-0.21.patch
 
 %description
 The e2fsprogs package contains a number of utilities for creating,
@@ -203,6 +204,7 @@ cd %{_builddir}/e2fsprogs-1.45.6
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 pushd ..
 cp -a e2fsprogs-1.45.6 build32
 popd
@@ -212,7 +214,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1604875658
+export SOURCE_DATE_EPOCH=1608187978
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -221,7 +223,11 @@ export CFLAGS="$CFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sect
 export FCFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
 export FFLAGS="$FFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
 export CXXFLAGS="$CXXFLAGS -O3 -Os -fdata-sections -ffat-lto-objects -ffunction-sections -flto=4 -fno-semantic-interposition "
-%reconfigure --disable-static --disable-fsck --disable-libblkid  --disable-uuidd --disable-libuuid --enable-elf-shlibs
+%reconfigure --disable-static --disable-fsck \
+--disable-libblkid \
+--disable-uuidd \
+--disable-libuuid \
+--enable-elf-shlibs
 make
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
@@ -229,7 +235,11 @@ export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
 export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
 export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
 export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
-%reconfigure --disable-static --disable-fsck --disable-libblkid  --disable-uuidd --disable-libuuid --enable-elf-shlibs  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+%reconfigure --disable-static --disable-fsck \
+--disable-libblkid \
+--disable-uuidd \
+--disable-libuuid \
+--enable-elf-shlibs  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make
 popd
 
@@ -243,7 +253,7 @@ cd ../build32;
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1604875658
+export SOURCE_DATE_EPOCH=1608187978
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
 cp %{_builddir}/e2fsprogs-1.45.6/NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/e7b0a43ab2f7a589ca3bf497fe86e52b15502355

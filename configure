@@ -1,1 +1,5 @@
- --disable-fsck --disable-libblkid  --disable-uuidd --disable-libuuid --enable-elf-shlibs
+--disable-fsck
+--disable-libblkid
+--disable-uuidd
+--disable-libuuid
+--enable-elf-shlibs

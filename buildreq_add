@@ -1,14 +1,15 @@
-#
-# This file contains extra pkgconfig build requirements that don't get picked up but are 
-# desirable. One name per line, no whitespace.
-#
-util-linux-dev
-util-linux-dev32
-bison
-texinfo
-procps-ng
-attr-dev
-attr-dev32
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
 acl-dev
 acl-dev32
+attr-dev
+attr-dev32
+bison
+file-dev
+fuse-dev
+pkg-config
+procps-ng
 systemd-dev32
+texinfo
+util-linux-dev
+util-linux-dev32

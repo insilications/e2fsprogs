@@ -1,0 +1,41 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Thu, 17 Dec 2020 04:35:31 +0000
+Subject: [PATCH] Adapt to autoconf 2.70 and gettext 0.21
+
+- AM_GNU_GETTEXT_VERSION (or AM_GNU_GETTEXT_REQUIRE_VERSION) is now
+  required at toplevel if AM_GNU_GETTEXT is also used.
+- USE_INCLUDED_LIBINTL (and BUILD_INCLUDED_LIBINTL) are no longer
+  defined and substituted in generated files, so do this manually as a
+  workaround.
+- Add workaround for gettext using a deprecated variable from automake.
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ configure.ac | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/configure.ac b/configure.ac
+index b431985..eb4f4a5 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -873,7 +873,19 @@ AC_SUBST(GETTEXT_PACKAGE)
+ AC_SUBST(PACKAGE)
+ AC_SUBST(VERSION)
+ 
++AM_GNU_GETTEXT_REQUIRE_VERSION([0.20.1])
+ AM_GNU_GETTEXT([external])
++USE_INCLUDED_LIBINTL=no
++BUILD_INCLUDED_LIBINTL=no
++AC_SUBST([USE_INCLUDED_LIBINTL])
++AC_SUBST([BUILD_INCLUDED_LIBINTL])
++dnl The po/Makefile.in.in from latest gettext (0.21) depends on the "mkdir_p"
++dnl variable from automake, not the "MKDIR_P" variable from autoconf. Since
++dnl automake deprecated "mkdir_p" in 2013, gettext will likely adapt eventually. A
++dnl bug report was filed back then:
++dnl https://lists.gnu.org/archive/html/bug-gettext/2013-04/msg00044.html
++AM_PROG_MKDIR_P
++
+ dnl
+ dnl End of configuration options
+ dnl
