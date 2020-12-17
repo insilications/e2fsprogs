@@ -1,4 +1,3 @@
 stateless.patch
-#0001-Skip-certain-tests-due-to-failure-on-XFS-build-hosts.patch
 build.patch
 0001-configure.ac-correct-AM_GNU_GETTEXT.patch
