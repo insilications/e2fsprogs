@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xF2F95956950D81A3 (tytso@mit.edu)
 #
 Name     : e2fsprogs
-Version  : 1.45.6
-Release  : 78
-URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.6/e2fsprogs-1.45.6.tar.gz
-Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.6/e2fsprogs-1.45.6.tar.gz
-Source1  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.6/e2fsprogs-1.45.6.tar.gz.asc
+Version  : 1.45.7
+Release  : 79
+URL      : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.7/e2fsprogs-1.45.7.tar.gz
+Source0  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.7/e2fsprogs-1.45.7.tar.gz
+Source1  : https://sourceforge.net/projects/e2fsprogs/files/e2fsprogs/v1.45.7/e2fsprogs-1.45.7.tar.gz.asc
 Summary  : Utilities for managing ext2/ext3/ext4 filesystems
 Group    : Development/Tools
 License  : BSD-3-Clause BSD-3-Clause-Clear GPL-2.0 LGPL-2.1
@@ -199,14 +199,14 @@ services components for the e2fsprogs package.
 
 
 %prep
-%setup -q -n e2fsprogs-1.45.6
-cd %{_builddir}/e2fsprogs-1.45.6
+%setup -q -n e2fsprogs-1.45.7
+cd %{_builddir}/e2fsprogs-1.45.7
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 pushd ..
-cp -a e2fsprogs-1.45.6 build32
+cp -a e2fsprogs-1.45.7 build32
 popd
 
 %build
@@ -214,7 +214,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1608187978
+export SOURCE_DATE_EPOCH=1611928879
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -253,14 +253,14 @@ cd ../build32;
 make check || :
 
 %install
-export SOURCE_DATE_EPOCH=1608187978
+export SOURCE_DATE_EPOCH=1611928879
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/e2fsprogs
-cp %{_builddir}/e2fsprogs-1.45.6/NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/e7b0a43ab2f7a589ca3bf497fe86e52b15502355
-cp %{_builddir}/e2fsprogs-1.45.6/debian/copyright %{buildroot}/usr/share/package-licenses/e2fsprogs/fc6b02ddb7365d99d34715f755cd7a1a44f59e8e
-cp %{_builddir}/e2fsprogs-1.45.6/ext2ed/COPYRIGHT %{buildroot}/usr/share/package-licenses/e2fsprogs/75cadb9188a364774ce3c4b721028c9b3b24d11c
-cp %{_builddir}/e2fsprogs-1.45.6/lib/ext2fs/tdb/patches/copyright %{buildroot}/usr/share/package-licenses/e2fsprogs/d1bf87ecabe986bacd73e7b7146effbaa99abe26
-cp %{_builddir}/e2fsprogs-1.45.6/lib/uuid/COPYING %{buildroot}/usr/share/package-licenses/e2fsprogs/e5c9f3867b9251dcd2d97a4d1dffaa38afe6625d
+cp %{_builddir}/e2fsprogs-1.45.7/NOTICE %{buildroot}/usr/share/package-licenses/e2fsprogs/e7b0a43ab2f7a589ca3bf497fe86e52b15502355
+cp %{_builddir}/e2fsprogs-1.45.7/debian/copyright %{buildroot}/usr/share/package-licenses/e2fsprogs/fc6b02ddb7365d99d34715f755cd7a1a44f59e8e
+cp %{_builddir}/e2fsprogs-1.45.7/ext2ed/COPYRIGHT %{buildroot}/usr/share/package-licenses/e2fsprogs/75cadb9188a364774ce3c4b721028c9b3b24d11c
+cp %{_builddir}/e2fsprogs-1.45.7/lib/ext2fs/tdb/patches/copyright %{buildroot}/usr/share/package-licenses/e2fsprogs/d1bf87ecabe986bacd73e7b7146effbaa99abe26
+cp %{_builddir}/e2fsprogs-1.45.7/lib/uuid/COPYING %{buildroot}/usr/share/package-licenses/e2fsprogs/e5c9f3867b9251dcd2d97a4d1dffaa38afe6625d
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
