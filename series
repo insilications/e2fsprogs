@@ -1,4 +1,3 @@
 stateless.patch
 build.patch
-0001-configure.ac-correct-AM_GNU_GETTEXT.patch
-0002-Adapt-to-autoconf-2.70-and-gettext-0.21.patch
+0001-Adapt-to-autoconf-2.70-and-gettext-0.21.patch

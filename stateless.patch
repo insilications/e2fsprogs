@@ -1,8 +1,8 @@
 diff --git a/MCONFIG.in b/MCONFIG.in
-index 6151825..9716af1 100644
+index 3fede36..6fcebb7 100644
 --- a/MCONFIG.in
 +++ b/MCONFIG.in
-@@ -23,6 +23,7 @@ libdir = @libdir@
+@@ -25,6 +25,7 @@ libdir = @libdir@
  datadir= @datadir@
  localedir = $(datadir)/locale
  root_sysconfdir= @root_sysconfdir@
@@ -11,10 +11,10 @@ index 6151825..9716af1 100644
  mandir = @mandir@
  man1dir = $(mandir)/man1
 diff --git a/configure.ac b/configure.ac
-index cf03444..4e77645 100644
+index 4c4b552..fc7849d 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1523,11 +1523,13 @@ if test "$sysconfdir" != '${prefix}/etc'; then
+@@ -1576,11 +1576,13 @@ if test "$sysconfdir" != '${prefix}/etc'; then
      root_sysconfdir=$sysconfdir
      AC_MSG_RESULT([Setting root_sysconfdir to $root_sysconfdir])
  fi
@@ -29,10 +29,10 @@ index cf03444..4e77645 100644
  dnl Allow specification of the multiarch arch
  dnl
 diff --git a/e2fsck/unix.c b/e2fsck/unix.c
-index e71d783..90cb3d3 100644
+index 08f1863..e073228 100644
 --- a/e2fsck/unix.c
 +++ b/e2fsck/unix.c
-@@ -793,6 +793,7 @@ static void syntax_err_report(const char *filename, long err, int line_num)
+@@ -802,6 +802,7 @@ static void syntax_err_report(const char *filename, long err, int line_num)
  }
  
  static const char *config_fn[] = { ROOT_SYSCONFDIR "/e2fsck.conf", 0 };
@@ -40,7 +40,7 @@ index e71d783..90cb3d3 100644
  
  static errcode_t PRS(int argc, char *argv[], e2fsck_t *ret_ctx)
  {
-@@ -1035,8 +1036,10 @@ static errcode_t PRS(int argc, char *argv[], e2fsck_t *ret_ctx)
+@@ -1044,8 +1045,10 @@ static errcode_t PRS(int argc, char *argv[], e2fsck_t *ret_ctx)
  	if ((cp = getenv("E2FSCK_CONFIG")) != NULL)
  		config_fn[0] = cp;
  	profile_set_syntax_err_cb(syntax_err_report);
@@ -54,10 +54,10 @@ index e71d783..90cb3d3 100644
  			    &c);
  	if (c)
 diff --git a/ext2ed/Makefile.in b/ext2ed/Makefile.in
-index 0697431..f1853e1 100644
+index e4724ca..9a87a47 100644
 --- a/ext2ed/Makefile.in
 +++ b/ext2ed/Makefile.in
-@@ -71,10 +71,10 @@ clean::
+@@ -72,10 +72,10 @@ clean::
  	-rmdir doc
  
  install: ext2ed
@@ -82,10 +82,10 @@ index 6ccb55b..e99020f 100644
 +/* Where to find the default mke2fs.conf and e2fsck.conf files */
 +#define DEFAULT_CONFDIR		"@datadir@/defaults/e2fsprogs"
 diff --git a/misc/Makefile.in b/misc/Makefile.in
-index 9f2a893..52a1b4f 100644
+index 3e82127..7368666 100644
 --- a/misc/Makefile.in
 +++ b/misc/Makefile.in
-@@ -534,12 +534,12 @@ filefrag.8: $(DEP_SUBSTITUTE) $(srcdir)/filefrag.8.in
+@@ -541,12 +541,12 @@ filefrag.8: $(DEP_SUBSTITUTE) $(srcdir)/filefrag.8.in
  	$(Q) $(SUBSTITUTE_UPTIME) $(srcdir)/filefrag.8.in filefrag.8
  
  installdirs:
@@ -100,7 +100,7 @@ index 9f2a893..52a1b4f 100644
  
  install: all $(SMANPAGES) $(UMANPAGES) installdirs
  	$(Q) for i in $(SPROGS); do \
-@@ -605,33 +605,33 @@ install: all $(SMANPAGES) $(UMANPAGES) installdirs
+@@ -612,33 +612,33 @@ install: all $(SMANPAGES) $(UMANPAGES) installdirs
  		(cd $(DESTDIR)$(man5dir); \
  			$(LN) $(LINK_INSTALL_FLAGS) ext4.5 $$i.5); \
  	done
@@ -148,7 +148,7 @@ index 9f2a893..52a1b4f 100644
  	fi
  
  install-strip: install
-@@ -683,8 +683,8 @@ uninstall:
+@@ -690,8 +690,8 @@ uninstall:
  		$(ES) "	LINK $$i.5"; \
  		$(RM) -f $(DESTDIR)$(man5dir)/$$i.5; \
  	done
@@ -160,10 +160,10 @@ index 9f2a893..52a1b4f 100644
  
  clean::
 diff --git a/misc/mke2fs.c b/misc/mke2fs.c
-index 27e7d17..f7c56af 100644
+index add441c..22997b1 100644
 --- a/misc/mke2fs.c
 +++ b/misc/mke2fs.c
-@@ -1180,6 +1180,7 @@ static void syntax_err_report(const char *filename, long err, int line_num)
+@@ -1190,6 +1190,7 @@ static void syntax_err_report(const char *filename, long err, int line_num)
  }
  
  static const char *config_fn[] = { ROOT_SYSCONFDIR "/mke2fs.conf", 0 };
@@ -171,7 +171,7 @@ index 27e7d17..f7c56af 100644
  
  static void edit_feature(const char *str, __u32 *compat_array)
  {
-@@ -1594,6 +1595,9 @@ static void PRS(int argc, char *argv[])
+@@ -1609,6 +1610,9 @@ static void PRS(int argc, char *argv[])
  		config_fn[0] = tmp;
  	profile_set_syntax_err_cb(syntax_err_report);
  	retval = profile_init(config_fn, &profile);

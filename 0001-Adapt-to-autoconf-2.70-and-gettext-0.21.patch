@@ -16,10 +16,10 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  1 file changed, 12 insertions(+)
 
 diff --git a/configure.ac b/configure.ac
-index b431985..eb4f4a5 100644
+index 66f354e..f1c2341 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -873,7 +873,19 @@ AC_SUBST(GETTEXT_PACKAGE)
+@@ -918,7 +918,19 @@ AC_SUBST(GETTEXT_PACKAGE)
  AC_SUBST(PACKAGE)
  AC_SUBST(VERSION)
  
