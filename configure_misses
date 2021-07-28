@@ -1,20 +1,20 @@
 Configure miss: 32-bit host C ABI
 Configure miss: CFLocaleCopyPreferredLanguages
-Configure miss: attr/xattr.h
-Configure miss: sys/key.h
-Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: CFLocaleCopyPreferredLanguages
 Configure miss: add_key
+Configure miss: add_key
+Configure miss: attr/xattr.h
+Configure miss: attr/xattr.h
+Configure miss: fuse.h
+Configure miss: fuse.h
+Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: keyctl
 Configure miss: keyctl
 Configure miss: llseek
-Configure miss: fuse.h
-Configure miss: system crontab dir
-Configure miss: CFLocaleCopyPreferredLanguages
-Configure miss: attr/xattr.h
-Configure miss: sys/key.h
-Configure miss: gcc options needed to detect all undeclared functions
-Configure miss: add_key
-Configure miss: keyctl
 Configure miss: llseek
 Configure miss: magic_file in -lmagic
-Configure miss: fuse.h
+Configure miss: sys/key.h
+Configure miss: sys/key.h
+Configure miss: system crontab dir
 Configure miss: system crontab dir
