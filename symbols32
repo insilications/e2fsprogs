@@ -471,9 +471,6 @@ libext2fs.so.2:ext2fs_punch
 libext2fs.so.2:ext2fs_r_blocks_count
 libext2fs.so.2:ext2fs_r_blocks_count_add
 libext2fs.so.2:ext2fs_r_blocks_count_set
-libext2fs.so.2:ext2fs_rb_augment_erase_begin
-libext2fs.so.2:ext2fs_rb_augment_erase_end
-libext2fs.so.2:ext2fs_rb_augment_insert
 libext2fs.so.2:ext2fs_rb_erase
 libext2fs.so.2:ext2fs_rb_first
 libext2fs.so.2:ext2fs_rb_insert_color
