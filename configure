@@ -1,3 +1,5 @@
+--enable-shared
+--enable-static
 --disable-fsck
 --disable-libblkid
 --disable-uuidd
